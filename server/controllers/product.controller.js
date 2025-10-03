@@ -1,6 +1,7 @@
-const Product = require("../models/Product");
+ 
 const ApiResponse = require("../utils/ApiResponse"); // Assumed utility
 const ApiError = require("../utils/ApiError");     // Assumed utility
+const productModel = require("../models/product.model");
 
 /**
  * Utility function to calculate the discount percentage.
@@ -60,7 +61,7 @@ const createProduct = async (req, res, next) => {
 const getAllProducts = async (req, res, next) => {
     try {
         // Find all products (no soft delete field assumed for simplicity)
-        const products = await Product.find({});
+        const products = await productModel.find({});
 
         if (products.length === 0) {
             // Returning 200 with an empty array is also acceptable for lists
@@ -78,7 +79,7 @@ const getProductById = async (req, res, next) => {
     try {
         const productId = req.params.id;
 
-        const product = await Product.findById(productId);
+        const product = await productModel.findById(productId);
 
         if (!product) {
             return next(new ApiError(`Product with ID ${productId} not found`, 404));
@@ -103,7 +104,7 @@ const updateProduct = async (req, res, next) => {
         // Recalculate discount if price or mrp is being updated
         if (updates.price !== undefined || updates.mrp !== undefined) {
             // Fetch current product to get existing price/mrp if one is missing in updates
-            const currentProduct = await Product.findById(productId);
+            const currentProduct = await productModel.findById(productId);
             if (!currentProduct) return next(new ApiError(`Product with ID ${productId} not found`, 404));
             
             const newPrice = updates.price !== undefined ? updates.price : currentProduct.price;
@@ -113,7 +114,7 @@ const updateProduct = async (req, res, next) => {
         }
 
         // Find and update the product
-        const updatedProduct = await Product.findByIdAndUpdate(
+        const updatedProduct = await productModel.findByIdAndUpdate(
             productId,
             { ...updates, updatedAt: Date.now() },
             { new: true, runValidators: true } // 'new: true' returns the updated document; 'runValidators: true' applies schema validation
@@ -140,7 +141,7 @@ const deleteProduct = async (req, res, next) => {
     try {
         const productId = req.params.id;
 
-        const deletedProduct = await Product.findByIdAndDelete(productId);
+        const deletedProduct = await productModel.findByIdAndDelete(productId);
 
         if (!deletedProduct) {
             return next(new ApiError(`Product with ID ${productId} not found`, 404));

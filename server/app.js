@@ -24,6 +24,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // 5️  routes mounting
+app.use("/api/test", (req, res) => {
+  res.send("test route is working");
+});
 app.use("/api/v1/product", productRoutes);
 // 6️ Global error handler (should be last)
 app.use(errorHandler);
