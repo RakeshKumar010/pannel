@@ -56,9 +56,10 @@ const createOrder = async (req, res, next) => {
     next(err);
   }
 };
+
 const getAllOrders = async (req, res, next) => {
   try {
-    const orders = await Order.find({ isDeleted: false }).sort({ createdAt: -1 });
+    const orders = await Order.find().sort({ createdAt: -1 });
 
     if (!orders || orders.length === 0) {
       return next(new ApiError("No orders found", 404));
@@ -72,6 +73,7 @@ const getAllOrders = async (req, res, next) => {
     next(err);
   }
 };
+
 const getOrderById = async (req, res, next) => {
   try {
     const { orderNumber } = req.params;
@@ -80,7 +82,7 @@ const getOrderById = async (req, res, next) => {
       return next(new ApiError("Order number is required", 400));
     }
 
-    const order = await Order.findOne({ orderNumber, isDeleted: false });
+    const order = await Order.findOne({ orderNumber });
 
     if (!order) {
       return next(new ApiError("Order not found", 404));
@@ -108,7 +110,7 @@ const updateOrderStatus = async (req, res, next) => {
     }
 
     const order = await Order.findOneAndUpdate(
-      { orderNumber, isDeleted: false },
+      { orderNumber },
       { $set: { status, updatedAt: Date.now() } },
       { new: true, runValidators: true }
     );
@@ -135,11 +137,7 @@ const deleteOrder = async (req, res, next) => {
       return next(new ApiError("Order number is required", 400));
     }
 
-    const order = await Order.findOneAndUpdate(
-      { orderNumber, isDeleted: false },
-      { $set: { isDeleted: true, updatedAt: Date.now() } },
-      { new: true }
-    );
+    const order = await Order.findOneAndDelete({ orderNumber });
 
     if (!order) {
       return next(new ApiError("Order not found", 404));
