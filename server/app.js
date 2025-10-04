@@ -6,6 +6,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const productRoutes = require("./routes/product.routes");
 const orderRoutes = require("./routes/order.routes");
+const adminRoutes = require("./routes/admin.routes");
 
 // Load environment variables
 require("dotenv").config();
@@ -34,6 +35,7 @@ app.use("/api/test", (req, res) => {
 });
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/orders", orderRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 // Global error handler (should be last)
 app.use(errorHandler);

@@ -1,10 +1,7 @@
 // src/Layout.jsx
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import AdminLogin from '../pages/AdminLogin';
-import AdminDashboard from '../pages/admin/AdminDashboard';
-import ProductManagement from '../pages/admin/ProductManagement';
-import OrderManagement from '../pages/admin/OrderManagement';
-import UserManagement from '../pages/admin/UserManagement';
+import AdminLogin from '../pages/AdminLogin'; 
+import OrderManagement from '../pages/admin/OrderManagement'; 
 import ViewOrder from '../pages/admin/ViewOrder';
 
 const Layout = () => {
@@ -17,18 +14,8 @@ const Layout = () => {
       <Routes>
         <Route path="/" element={<div>HOME</div>} />
         <Route path="/adsmin" element={<AdminLogin />} />
-        <Route
-          path="/dashboard"
-          element={
-            isAuthenticated() ? <AdminDashboard /> : <Navigate to="/" replace />
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            isAuthenticated() ? <ProductManagement /> : <Navigate to="/" replace />
-          }
-        />
+       
+       
         <Route
           path="/orders"
           element={
@@ -41,12 +28,7 @@ const Layout = () => {
             isAuthenticated() ? <ViewOrder /> : <Navigate to="/" replace />
           }
         />
-        <Route
-          path="/users"
-          element={
-            isAuthenticated() ? <UserManagement /> : <Navigate to="/" replace />
-          }
-        />
+        
       </Routes>
     </BrowserRouter>
   );

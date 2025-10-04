@@ -98,7 +98,7 @@ const OrderManagement = () => {
 
 
  return (
-  <div className="min-h-screen  bg-gray-100 flex overflow-hidden">
+  <div className="min-h-screen  bg-gray-100 flex pt-10 overflow-hidden">
    <AdminSidebar />
    {/* Allow for horizontal scrolling on the main content area */}
    <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-8 ml-0 sm:ml-64 overflow-x-auto">
