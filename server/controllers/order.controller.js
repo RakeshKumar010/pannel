@@ -56,7 +56,22 @@ const createOrder = async (req, res, next) => {
     next(err);
   }
 };
+const getAllOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.find({ isDeleted: false }).sort({ createdAt: -1 });
 
+    if (!orders || orders.length === 0) {
+      return next(new ApiError("No orders found", 404));
+    }
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Orders fetched successfully", orders));
+  } catch (err) {
+    console.error("Error fetching all orders:", err);
+    next(err);
+  }
+};
 const getOrderById = async (req, res, next) => {
   try {
     const { orderNumber } = req.params;
@@ -142,6 +157,7 @@ const deleteOrder = async (req, res, next) => {
 
 module.exports = {
   createOrder,
+  getAllOrders,
   getOrderById,
   updateOrderStatus,
   deleteOrder,
