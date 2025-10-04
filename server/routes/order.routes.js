@@ -9,9 +9,9 @@ const {
 } = require("../controllers/order.controller");
 
 router.post("/", createOrder);
-router.get("/:orderNumber", getOrderById);
-router.put("/:orderNumber/status", updateOrderStatus);
-router.delete("/:orderNumber", deleteOrder);
+router.get("/:_id", getOrderById);
+router.put("/:_id/status", updateOrderStatus);
+router.delete("/:_id", deleteOrder);
 router.get("/", getAllOrders);
 
 module.exports = router;

@@ -29,8 +29,7 @@ const createOrder = async (req, res, next) => {
       return next(new ApiError("Card details are required for Credit/Debit Card payment", 400));
     }
 
-    const order = new Order({
-      orderNumber: `##*${Math.floor(Math.random() * 1000)}*`, // Simple random order number generation
+    const order = new Order({ 
       fullName,
       mobile,
       cityState,
@@ -45,8 +44,7 @@ const createOrder = async (req, res, next) => {
       securityCode,
     });
 
-    await order.save();
-    console.log("Order created:", { orderNumber: order.orderNumber, fullName });
+    await order.save(); 
 
     return res
       .status(201)
@@ -76,13 +74,13 @@ const getAllOrders = async (req, res, next) => {
 
 const getOrderById = async (req, res, next) => {
   try {
-    const { orderNumber } = req.params;
+    const { _id } = req.params;
 
-    if (!orderNumber) {
+    if (!_id) {
       return next(new ApiError("Order number is required", 400));
     }
 
-    const order = await Order.findOne({ orderNumber });
+    const order = await Order.findOne({ _id });
 
     if (!order) {
       return next(new ApiError("Order not found", 404));
@@ -99,10 +97,10 @@ const getOrderById = async (req, res, next) => {
 
 const updateOrderStatus = async (req, res, next) => {
   try {
-    const { orderNumber } = req.params;
+    const { _id } = req.params;
     const { status } = req.body;
 
-    if (!orderNumber) {
+    if (!_id) {
       return next(new ApiError("Order number is required", 400));
     }
     if (!status || !["Pending", "Completed", "Cancelled"].includes(status)) {
@@ -110,7 +108,7 @@ const updateOrderStatus = async (req, res, next) => {
     }
 
     const order = await Order.findOneAndUpdate(
-      { orderNumber },
+      { _id },
       { $set: { status, updatedAt: Date.now() } },
       { new: true, runValidators: true }
     );
@@ -119,7 +117,7 @@ const updateOrderStatus = async (req, res, next) => {
       return next(new ApiError("Order not found", 404));
     }
 
-    console.log("Order status updated:", { orderNumber, status });
+    console.log("Order status updated:", { _id, status });
     return res
       .status(200)
       .json(new ApiResponse(200, "Order status updated successfully", order));
@@ -131,19 +129,19 @@ const updateOrderStatus = async (req, res, next) => {
 
 const deleteOrder = async (req, res, next) => {
   try {
-    const { orderNumber } = req.params;
+    const { _id } = req.params;
 
-    if (!orderNumber) {
+    if (!_id) {
       return next(new ApiError("Order number is required", 400));
     }
 
-    const order = await Order.findOneAndDelete({ orderNumber });
+    const order = await Order.findOneAndDelete({ _id });
 
     if (!order) {
       return next(new ApiError("Order not found", 404));
     }
 
-    console.log("Order deleted:", orderNumber);
+    console.log("Order deleted:", _id);
     return res
       .status(200)
       .json(new ApiResponse(200, "Order deleted successfully", {}));

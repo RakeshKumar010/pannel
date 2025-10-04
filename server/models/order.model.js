@@ -1,12 +1,7 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  // Customer Details
-  orderNumber: {
-    type: String,
-    required: [true, "Order number is required"],
-    unique: true,
-  },
+ 
   fullName: {
     type: String,
     required: [true, "Full name is required"],
