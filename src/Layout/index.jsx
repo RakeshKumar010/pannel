@@ -20,31 +20,31 @@ const Layout = () => {
         <Route
           path="/dashboard"
           element={
-            isAuthenticated() ? <AdminDashboard /> : <Navigate to="/adsmin" replace />
+            isAuthenticated() ? <AdminDashboard /> : <Navigate to="/" replace />
           }
         />
         <Route
           path="/products"
           element={
-            isAuthenticated() ? <ProductManagement /> : <Navigate to="/adsmin" replace />
+            isAuthenticated() ? <ProductManagement /> : <Navigate to="/" replace />
           }
         />
         <Route
           path="/orders"
           element={
-            isAuthenticated() ? <OrderManagement /> : <Navigate to="/adsmin" replace />
+            isAuthenticated() ? <OrderManagement /> : <Navigate to="/" replace />
           }
         />
         <Route
           path="/orders/:id"
           element={
-            isAuthenticated() ? <ViewOrder /> : <Navigate to="/adsmin" replace />
+            isAuthenticated() ? <ViewOrder /> : <Navigate to="/" replace />
           }
         />
         <Route
           path="/users"
           element={
-            isAuthenticated() ? <UserManagement /> : <Navigate to="/adsmin" replace />
+            isAuthenticated() ? <UserManagement /> : <Navigate to="/" replace />
           }
         />
       </Routes>

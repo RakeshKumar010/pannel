@@ -5,7 +5,7 @@ import { Package, ShoppingCart, Users, DollarSign } from 'lucide-react';
 
 const AdminDashboard = () => {
  // Mock data for dashboard statistics
- const user = { name: 'Admin User', email: 'admin@example.com' };
+ 
  const stats = [
   { title: 'Total Products', value: 145, icon: Package, color: 'bg-teal-500' },
   { title: 'New Orders', value: 12, icon: ShoppingCart, color: 'bg-indigo-500' }, 
@@ -26,7 +26,7 @@ const AdminDashboard = () => {
       Dashboard
      </h1>
      <p className="text-lg text-gray-500 mb-8">
-      Welcome back, **{user.name}**! Here's an overview of your store.
+      Welcome , Here's an overview of your store.
      </p>
 
      {/* Stats Grid */}

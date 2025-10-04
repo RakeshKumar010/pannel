@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const dbConnect = async () => {
   try {
-    data = await mongoose.connect(process.env.MONGO_URL || 5000);
+    data = await mongoose.connect(process.env.MONGO_URL || 4003);
     console.log("database connected successfully ", data.connection.host);
   } catch (error) {
     console.log("database not connected successfully ", error);

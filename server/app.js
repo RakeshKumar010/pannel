@@ -5,13 +5,18 @@ const errorHandler = require("./middleware/errorHandler");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const productRoutes = require("./routes/product.routes");
-// 1️ Connect to MongoDB
+const orderRoutes = require("./routes/order.routes");
+
+// Load environment variables
+require("dotenv").config();
+
+// Connect to MongoDB
 dbConnect();
 
-// 2️ Middleware to parse cookies
+// Middleware to parse cookies
 app.use(cookieParser());
 
-// 3️ CORS configuration (allow frontend & send cookies)
+// CORS configuration (allow frontend & send cookies)
 app.use(
   cors({
     origin: ["https://dmartindia.vercel.app", "http://localhost:5173"],
@@ -19,17 +24,24 @@ app.use(
   })
 );
 
-// 4️ Middleware to parse incoming JSON and form data
+// Middleware to parse incoming JSON and form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 5️  routes mounting
+// Routes mounting
 app.use("/api/test", (req, res) => {
-  res.send("test route is working");
+  res.send("Test route is working");
 });
 app.use("/api/v1/product", productRoutes);
-// 6️ Global error handler (should be last)
+app.use("/api/v1/orders", orderRoutes);
+
+// Global error handler (should be last)
 app.use(errorHandler);
 
-//Ready to export
+// Start the server
+const PORT = process.env.PORT || 4003;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
 module.exports = app;
